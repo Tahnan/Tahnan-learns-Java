@@ -4,13 +4,11 @@ public class Anagram {
 	// otherwise, we'll subtract 1 from each element
 	int factor = addLetters ? 1 : -1;
 	
-	// For each char in word: if it's an ASCII letter, adjust the corresponding
-	// point in the counter (since A = 65, subtracting 65 from the char value
-	// gives A = 0, ..., Z = 25)
-	for (int i = 0; i < word.length(); i++) {
-	    String charNumberI = word.substring(i, i + 1);
-	    if (charNumberI.matches("[A-Z]")) {
-	        counter[charNumberI.charAt(0) - 65] += factor;
+	// For each char in word: if it's an ASCII letter, i.e. if its codepoint
+	// is between 65 and 90, update the corresponding point in the counter
+	for (char codepoint : word.toCharArray()) {
+	    if (65 <= codepoint && codepoint <= 90) {
+	        counter[codepoint - 65] += factor;
 	    }
 	}
     }
@@ -42,8 +40,8 @@ public class Anagram {
 	subtractWordFromArray(second, letters);
 
 	// If anything in the array isn't 0, there's an imbalance.  Otherwise, yay!
-	for (int i = 0; i < letters.length; i++) {
-	    if (letters[i] !=0) {
+	for (int letterCount: letters) {
+	    if (letterCount !=0) {
 		System.out.println("Not an anagram.");
 		return;
 	    }
